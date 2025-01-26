@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= manhwa.title %> - Manhwa Reader</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1><%= manhwa.title %></h1>
+    </header>
+    <main>
+        <div class="manhwa-detail">
+            <img src="<%= manhwa.image %>" alt="<%= manhwa.title %>">
+            <p><%= manhwa.description %></p>
+            <h3>Chapters</h3>
+            <ul>
+                <% manhwa.chapters.forEach(function(chapter) { %>
+                    <li><a href="/chapter/<%= chapter.id %>">Chapter <%= chapter.title %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,44 @@
+/* Card untuk Genre */
+.card-genres {
+  max-width: 1000px;
+  width: 90%;
+  margin: 20px auto;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-wrap: wrap; /* Memungkinkan genre pindah ke baris baru */
+  gap: 5px; /* Memberikan jarak antar genre */
+}
+
+.card-genres h3 {
+  font-size: 16px;
+  margin: 0 0 10px 0;
+}
+
+.card-genres .genres a {
+  background: #7A6CFF;
+  padding: 4px 8px;
+  border-radius: 10px;
+  margin: 3px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px; /* Mengatur lebar maksimal genre button */
+  text-align: center;
+  flex-shrink: 0; /* Menjaga agar button tidak mengecil */
+  box-sizing: border-box;
+}
+
+/* Responsif untuk Mobile */
+@media (max-width: 600px) {
+  .card-genres .genres a {
+    width: 48%; /* Membuat genre button lebar sekitar setengah dari container */
+    font-size: 10px; /* Menurunkan ukuran font untuk tampilan mobile */
+  }
+}

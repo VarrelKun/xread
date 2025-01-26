@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorite Manhwa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://files.catbox.moe/vog5mk.jpg') no-repeat center center fixed;
+      background-size: cover;
+      padding-bottom: 80px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #6F60FF;
+      padding: 16px;
+    }
+
+    .manhwa-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .manhwa-card {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px;
+    }
+
+    .manhwa-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .manhwa-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .manhwa-card .info {
+      margin-top: 8px;
+      text-align: left;
+    }
+
+    .manhwa-card .info h3 {
+      margin: 0;
+      font-size: 12px;
+      color: #333;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
+
+    /* Bottom Navigation Styles */
+    .nav {
+      position: fixed;
+      bottom: 0;
+      left: 40%;
+      transform: translateX(-40%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 85%;
+      max-width: 900px;
+      background: #6F60FF;
+      padding: 10px 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      z-index: 999;
+    }
+
+    .nav__link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      font-size: 19px;
+      color: #212121;
+      transition: color 0.5s;
+    }
+
+    .nav__link:hover {
+      color: #6C69FF;
+    }
+
+    .nav__icon {
+      font-size: 20px;
+    }
+
+    .nav__link.active {
+      color: #fff;
+    }
+
+    .remove-btn {
+      background-color: transparent;
+      color: #ff4b5c;
+      border: 1px solid #ff4b5c;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .remove-btn:hover {
+      background-color: #ff4b5c;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bookmarked</h1>
+
+  <div id="manhwa-list" class="manhwa-list"></div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="nav">
+    <a href="/" class="nav__link">
+      <i class="fas fa-home nav__icon"></i>
+      <span class="nav__text">Home</span>
+    </a>
+    <a href="/saved" class="nav__link active">
+      <i class="fas fa-heart nav__icon"></i>
+      <span class="nav__text">Favorites</span>
+    </a>
+    <a href="/search" class="nav__link">
+      <i class="fas fa-search nav__icon"></i>
+      <span class="nav__text">Search</span>
+    </a>
+  </div>
+
+  <script>
+  window.onload = async () => {
+    // Load Bookmarked Manhwa from LocalStorage
+    const bookmarks = JSON.parse(localStorage.getItem('favorites')) || [];
+    const manhwaContainer = document.getElementById('manhwa-list');
+
+    if (bookmarks.length === 0) {
+      manhwaContainer.innerHTML = '<p style="color: white;">No bookmarked yet.</p>';
+    } else {
+      // Display Bookmarked Manhwa
+      bookmarks.forEach(manhwa => {
+        const card = document.createElement('div');
+        card.classList.add('manhwa-card');
+        
+        // Menambahkan event listener untuk mengarahkan ke halaman detail
+        card.onclick = () => {
+          window.location.href = `/komik/${manhwa.manhwaId}`; // Mengarahkan ke halaman detail berdasarkan manhwaId
+        };
+
+        card.innerHTML = `
+          <img src="${manhwa.imageSrc}" alt="${manhwa.title}">
+          <div class="info"><h3>${manhwa.title}</h3></div>
+          <button class="remove-btn">Remove</button>
+        `;
+
+        const removeBtn = card.querySelector('.remove-btn');
+        removeBtn.onclick = (event) => {
+          // Mencegah event klik card untuk dijalankan ketika tombol "Remove" diklik
+          event.stopPropagation();
+          removeBookmark(manhwa);
+        };
+
+        manhwaContainer.appendChild(card);
+      });
+    }
+  };
+
+  function removeBookmark(manhwa) {
+    // Remove manhwa from the bookmarks array
+    let bookmarks = JSON.parse(localStorage.getItem('favorites')) || [];
+    bookmarks = bookmarks.filter(bookmark => bookmark.manhwaId !== manhwa.manhwaId);
+    
+    // Save updated bookmarks back to localStorage
+    localStorage.setItem('favorites', JSON.stringify(bookmarks));
+
+    // Reload the page to reflect changes
+    window.location.reload();
+  }
+</script>
+</body>
+</html>
