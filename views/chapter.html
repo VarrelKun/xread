@@ -260,32 +260,34 @@
 
         // Periksa dan atur tombol prev/next sesuai dengan chapter
         if (data.prevChapter !== null) {
-          prevTopButton.style.display = 'inline-block';
-          prevBottomButton.style.display = 'inline-block';
-          prevTopButton.href = data.prevChapter;
-          prevBottomButton.href = data.prevChapter;
-          prevTopButton.classList.remove('disabled');
-          prevBottomButton.classList.remove('disabled');
-        } else {
-          prevTopButton.href = '#';
-          prevBottomButton.href = '#';
-          prevTopButton.classList.add('disabled');
-          prevBottomButton.classList.add('disabled');
-        }
+  const prevId = data.prevChapter.split('/').filter(Boolean).pop(); // Ambil ID dari URL
+  prevTopButton.style.display = 'inline-block';
+  prevBottomButton.style.display = 'inline-block';
+  prevTopButton.href = `/chapter/${prevId}`;
+  prevBottomButton.href = `/chapter/${prevId}`;
+  prevTopButton.classList.remove('disabled');
+  prevBottomButton.classList.remove('disabled');
+} else {
+  prevTopButton.href = '#';
+  prevBottomButton.href = '#';
+  prevTopButton.classList.add('disabled');
+  prevBottomButton.classList.add('disabled');
+}
 
-        if (data.nextChapter !== null) {
-          nextTopButton.style.display = 'inline-block';
-          nextBottomButton.style.display = 'inline-block';
-          nextTopButton.href = data.nextChapter;
-          nextBottomButton.href = data.nextChapter;
-          nextTopButton.classList.remove('disabled');
-          nextBottomButton.classList.remove('disabled');
-        } else {
-          nextTopButton.href = '#';
-          nextBottomButton.href = '#';
-          nextTopButton.classList.add('disabled');
-          nextBottomButton.classList.add('disabled');
-        }
+if (data.nextChapter !== null) {
+  const nextId = data.nextChapter.split('/').filter(Boolean).pop(); // Ambil ID dari URL
+  nextTopButton.style.display = 'inline-block';
+  nextBottomButton.style.display = 'inline-block';
+  nextTopButton.href = `/chapter/${nextId}`;
+  nextBottomButton.href = `/chapter/${nextId}`;
+  nextTopButton.classList.remove('disabled');
+  nextBottomButton.classList.remove('disabled');
+} else {
+  nextTopButton.href = '#';
+  nextBottomButton.href = '#';
+  nextTopButton.classList.add('disabled');
+  nextBottomButton.classList.add('disabled');
+}
 
       } catch (error) {
         console.error('Error loading chapter:', error);
