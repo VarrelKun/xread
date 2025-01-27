@@ -22,6 +22,9 @@ app.get('/', async (req, res) => {
 app.get('/komik/:id', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'detail.html'));
 });
+app.get('/search', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'search.html'));
+});
 
 app.get('/saved', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'saved.html'));
